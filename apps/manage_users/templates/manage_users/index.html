@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>Admin | Users</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'admin_app/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <a href="{% url 'admin_mission_control' %}">Back</a>
+    <div class="col-md-12">
+      <h2>Users:</h2>
+      <table class="table">
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Street Address</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Zip Code</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone_num }}</td>
+          <td>{{ user.address.street }}</td>
+          <td>{{ user.address.city }}</td>
+          <td>{{ user.address.state }}</td>
+          <td>{{ user.address.zip_code }}</td>
+            
+            <!-- CHANGE ALL THESE LINKS -->
+
+          <td>
+            <form action="{% url 'manage_users_delete_user' %}" method='post'>
+              {% csrf_token %}
+              <input type="hidden" name='id' value= {{ user.id }}>
+              <input class="btn btn-danger" type="submit" value='Delete'>
+            </form>
+          </td>
+          <td>
+            <form action="/admin/users/edit_user_page/{{ user.id }}" method='post'>
+              {% csrf_token %}
+              <input type="hidden" name='id' value= {{ user.id }}>
+              <input class="btn btn-primary" type="submit" value='Edit'>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>

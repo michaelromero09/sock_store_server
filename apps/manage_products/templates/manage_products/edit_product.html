@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <title>Admin | Edit Products</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'admin_app/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <div>
+      <a href="{% url 'manage_products_index' %}">Back</a>
+    </div>
+    <div class="container">
+      <form action="{% url 'manage_products_edit_product' %}" method='post'>
+        {% csrf_token %}
+        {% for product in products %}
+        <input type="hidden" name="id" value="{{product.id}}">
+          <div class="form-group">
+            <label for="name" class="control-label">Product Name: </label>
+            <input class="form-control" type="text" name="name" value="{{product.name}}">
+          </div>
+          <div class="checkbox">
+          <h5>Sizes: </h5>
+          {% for size in sizes %}
+            <label class="checkbox-inline">
+              <input type="checkbox" name="size_{{size.id}}" value={{ size.id }}><p>{{size.size}}</p>
+            </label>
+          {% endfor %}
+        </div>
+          <div class="form-group">
+            <label for="dept" class="control-label">Dept.: </label>
+            <input class="form-control" type="text" name="dept" value="{{product.dept}}">
+          </div>
+          <div class="form-group">
+            <label for="style" class="control-label">Style: </label>
+            <input class="form-control" type="text" name="style" value="{{product.style}}">
+          </div>
+          <h5>Design: </h5>
+            {% for design in designs %}
+              <div class="radio">
+                <label>
+                  <input type="radio" name="design" value="{{ design.id }}" checked>
+                  {{ design.design }}
+                </label>
+              </div>
+            {% endfor %}
+            <div class="radio">
+              <label>
+                <input type="radio" name="design" value="other" checked>
+                Other:
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="other_design" class="control-label"></label>
+              <input class="form-control" type="text" name="other_design">
+            </div>
+          <div class="form-group">
+            <label for="material" class="control-label">Material: </label>
+            <input class="form-control" type="text" name="material" value="{{product.material}}">
+          </div>
+          <div class="form-group">
+            <label for="price" class="control-label">Price: </label>
+            <input class="form-control" type="number" name="price" value="{{product.price}}">
+          </div>
+          <div class="form-group">
+            <label for="cost" class="control-label">Cost: </label>
+            <input class="form-control" type="number" name="cost" value="{{product.cost}}">
+          </div>
+          <div class="form-group">
+            <label for="image" class="control-label">Image: </label>
+            <input class="form-control" type="text" name="image" value="{{product.image}}">
+          </div>
+          <input class="btn btn-success" type="submit" value="Update Product">
+        {% endfor %}
+      </form>
+    </div>
+  </body>
+</html>

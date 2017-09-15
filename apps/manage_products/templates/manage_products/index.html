@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>Admin | Products</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'manage_products/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <div>
+      <a href="{% url 'admin_mission_control' %}">Back</a>
+    </div>
+    <a href="{% url 'manage_products_add_product_page' %}">Add Product</a>
+    <div class="col-md-12">
+      <h2>Products:</h2>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Sizes</th>
+          <th>Dept.</th>
+          <th>Style</th>
+          <th>Design</th>
+          <th>Material</th>
+          <th>Price</th>
+          <th>Cost</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+          <td>{{ product.name }}</td>
+          <!-- <td><img src="{% static '../../../products_app/static/products_app/images/beeM.jpg' %}" alt="product_image"></td> -->
+          <td><img src="{% static 'product_images/alien.jpg' %}" alt="product_image"></td>
+          <td>{% for relationship in product.product_sizes.all %}
+                <p class="sizes">{{relationship.size.size}}</p>
+              {% endfor %}</td>
+          <td>{{ product.dept }}</td>
+          <td>{{ product.style }}</td>
+          <td>{{ product.design.design }}</td>
+          <td>{{ product.material }}</td>
+          <td>${{ product.price }}</td>
+          <td>${{ product.cost }}</td>
+          <td>
+            <form action="{% url 'manage_products_delete_product' %}" method='post'>
+              {% csrf_token %}
+              <input type="hidden" name='id' value= {{ product.id }}>
+              <input class="btn btn-danger" type="submit" value='Delete'>
+            </form>
+          </td>
+          <td>
+            <form action="/admin/products/edit_product_page/{{ product.id }}" method='post'>
+              {% csrf_token %}
+              <input type="hidden" name='id' value= {{ product.id }}>
+              <input class="btn btn-primary" type="submit" value='Edit'>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>

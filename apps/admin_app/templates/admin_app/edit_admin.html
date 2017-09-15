@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Admin | Edit Admin</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'admin_app/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="wrapper">
+      <a href="{% url 'admin_mission_control' %}">Back</a>
+    </div>
+    <div class="container">
+      <ul>
+        {% for message in messages %}
+          <li> {{ message }}</li>
+        {% endfor%}
+      </ul>
+      <form action="{% url 'admin_edit_admin' %}" method='post'>
+        {% csrf_token %}
+        {% for admin in admins %}
+        <input type="hidden" name='id' value='{{ admin.id }}'>
+        <div>
+          <label for="first_name" class="col-sm-2 control-label">First Name:</label>
+          <input type="text" name='first_name' value='{{ admin.first_name }}'>
+        </div>
+        <div>
+          <label for="last_name" class="col-sm-2 control-label">Last Name:</label>
+          <input type="text" name='last_name' value='{{ admin.last_name }}'>
+        </div>
+        <div>
+          <label for="email" class="col-sm-2 control-label">Email:</label>
+          <input type="text" name='email' value='{{ admin.email }}'>
+        </div>
+        <div>
+          <label for="password" class="col-sm-2 control-label">Password:</label>
+          <input type="password" name='password'>
+        </div>
+        <div>
+          <label for="confirm_pw" class="col-sm-2 control-label">Confirm Password:</label>
+          <input type="password" name='confirm_pw'>
+        </div>
+        <input type="submit" value='Update'>
+        {% endfor %}
+      </form>
+    </div>
+  </body>
+</html>

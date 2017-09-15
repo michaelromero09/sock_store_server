@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <title>Sock Homepage</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'store_app/css/index.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="LOGO">
+                <img src="{% static 'store_app/images/main_pic.jpg' %}" alt="Cool Cat Socks">
+                <a href="http://localhost:8000">Cool Cat Socks</a>
+            </div>
+            <div class="login">
+                {% if request.session.id == None %}
+                    <h2>Login</h2>
+                    <form class="form-inline" action="{% url 'login_submit' %}" method='post'>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="">Email:</label>
+                            <input class="form-control" type="text" name='email'>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Password:</label>
+                            <input class="form-control" type="password" name='password'>
+                        </div>
+                        <div class="login-submit">
+                            <input type="submit" value='Login'>
+                            <p>|</p>
+                            <a href="http://localhost:8000/register">REGISTER</a>
+                        </div>
+                    </form>
+                {% endif %}
+                {% if request.session.id %}
+                    <div class="user-cart text-right">
+                        <p>logged in as: {{ user.first_name }}</p>
+                        <a href="">Account Details</a>  
+                        <!--link account setting and add logic for cart and link to cart page!-->
+                        <div class="cart">
+                            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><a href="">  Cart() </a> 
+                        </div>
+                        <a href="{% url 'logout' %}" class="btn btn-primary btn-xs active" role="button">Logout</a>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="navbar navbar-default text-center col-md-12">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'home' %}"> - Home </a></li>
+                    <li><a href="{% url 'about' %}"> - About Us </a></li>
+                    <li><a href="{% url 'products_main' %}"> - Products </a></li>
+                    <li><a href="{% url 'products_sale' %}"> - SALE </a></li>
+                    <li><a href="{% url 'cart' %}"> - Your Cart</a></li>
+                    <li><a href="{% url 'contact' %}"> - Contact Us -</a></li>
+                </ul>
+            </div>
+            <div class="errors">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="main-body text-center">
+            <p>Socks website info paragraph....</p>
+            <div class="featured">
+                <h2>Featured Socks</h2>
+            </div>
+            <div class="new">
+                <h2>New Socks</h2>
+            </div>
+            <div class="inspiration">
+                <h2>Sock-sational Inspiration</h2>
+            </div>
+            <div class="shop-by">
+                <h2>Individual Pairs</h2>
+                <h2>Bundles of Socks</h2>
+            </div>
+        </div>
+        <div class="footer">
+            <h3>Cool Cat Socks</h3>
+            <div class="subscribe">
+                <p>Subscribe to stay updated on new product, sales, and more!</p>
+                <form action="{% url 'subscribe_submit' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="email" value="Enter email here">
+                    <input type="submit" value="Subscribe">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

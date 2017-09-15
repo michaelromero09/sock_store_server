@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Product Main</title>
+    <!--{% load staticfiles %}-->
+    <!--<link rel="stylesheet" href= "{% static 'store_app/css/index.css' %}">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <div class="header">
+        <a href="http://localhost:8000">Cool Cat Socks</a>
+        <div class="navbar navbar-default text-center col-md-12">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'home' %}"> - Home </a></li>
+                <li><a href="{% url 'about' %}"> - About Us </a></li>
+                <li><a href="{% url 'products_main' %}"> - Products </a></li>
+                <li><a href="{% url 'products_sale' %}"> - SALE </a></li>
+                <li><a href="{% url 'cart' %}"> - Your Cart</a></li>
+                <li><a href="{% url 'contact' %}"> - Contact Us -</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="body">
+        <div class="shop-by">
+            <form>
+                {% csrf_token %}
+                <p>Shop Products by Categories:</p>
+                <input type="radio" name="sock_category" value="womens"> Womens
+                <input type="radio" name="sock_category" value="mens"> Male
+                <input type="radio" name="sock_category" value="girls"> Girls
+                <input type="radio" name="sock_category" value="boys"> Boys
+                <p>Shop Products by Styles:</p>
+                <input type="radio" name="sock_style" value="no_show"> No Show
+                <input type="radio" name="sock_style" value="ankle"> Ankle 
+                <input type="radio" name="sock_style" value="crew"> Crew
+                <input type="radio" name="sock_style" value="knee+"> Knee-high and beyond
+                <p>Shop Products by Price:</p>
+                <input type="radio" name="sock_price" value="$2-"> $2 and under
+                <input type="radio" name="sock_price" value="$-4.99"> $2-$4.99
+                <input type="radio" name="sock_price" value="$5-9.99"> $5-$9.99
+                <input type="radio" name="sock_price" value="$10+"> $10+
+                <input type="radio" name="sock_price" value="sale"> SALE
+                <p>View:</p>
+                <input type="radio" name="pairs" value="pairs"> Pairs
+                <input type="radio" name="bundles" value="bundles"> Bundles
+                <input type="submit" value="FILTER">
+            </form>
+        </div>
+        <div class="products">
+            <h1>Shop Cool Socks</h1>
+            <p>products will be displayed here by Michael. Eventually.....</p>
+        </div>
+    </div>
+</body>
+</html>
