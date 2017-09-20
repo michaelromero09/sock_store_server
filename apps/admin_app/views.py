@@ -3,20 +3,24 @@ from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.contrib import messages
 from .models import Admins
-import bcrypt
+import bcrypt, json
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
   return render(request, 'admin_app/index.html')
 
+@csrf_exempt
 def login(request):
-  print('THIS IS WHAT I\'M CURRENTLY DOING')
-  print('butter')
-  print(email)
-  # print(request)
-  # email = request.POST['email']
-  # errors = Admins.objects.login_validator(request.POST)
+  print(request.body)
+  data = json.loads(request.body)
+  print(data['email'])
+  email = data['email']
+  password = data['password']
+  print 'Email: ' + email + ', password: ' + password
+  errors = Admins.objects.login_validator(data)
+  print errors
   # if len(errors):
   #   for tag,error in errors.iteritems():
   #     messages.add_message(request, messages.ERROR, str(error))
@@ -25,7 +29,7 @@ def login(request):
   #   # request.session['id'] = Admins.objects.get(email = email).id
   #   #messages.add_message(request, messages.SUCCESS, "Successfully logged in!")
   #   return redirect(reverse('admin_mission_control'))
-  return 'Butter'
+  return HttpResponse(errors, content_type='application/json')
 
 def register_admin(request):
   first_name = request.POST['first_name']

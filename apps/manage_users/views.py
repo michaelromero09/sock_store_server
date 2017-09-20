@@ -8,6 +8,8 @@ import bcrypt
 def get_all_users(request):
   print 'THIS thing'
   users = Users.objects.all()
+  for user in users:
+    print user.address.city
   data = serializers.serialize("json", users)
   return HttpResponse(data, content_type="application/json")
 

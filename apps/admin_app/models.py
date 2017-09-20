@@ -34,6 +34,7 @@ class AdminManager(models.Manager):
       email_exists = Admins.objects.filter(email = postData['email'])
       if not email_exists:
         errors["email"] = "Email address is not found in database"
+        return errors
       if len(postData['password']) == 0:
         errors['password'] = 'Please enter password'
         return errors
