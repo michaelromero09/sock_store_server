@@ -3,14 +3,26 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.core import serializers
 from ..store_app.models import Users, Addresses
-import bcrypt
+from serializers import UserSerializer
+import bcrypt, json
+
+# class UsersService 
+#   def getAllUsers
+#     return UserSerializer(Users.objects.all(), many=True).data
+
+
+
+# class HttpService
+#   def send (data)
+#     return HttpResponse(json.dumps(data), contenjson)
+
+# def get_all_users(request):
+#   return HttpService.send(UsersService.getAllUsers)
 
 def get_all_users(request):
-  print 'THIS thing'
   users = Users.objects.all()
-  for user in users:
-    print user.address.city
-  data = serializers.serialize("json", users)
+  serializer = UserSerializer(users, many=True)
+  data = json.dumps(serializer.data)
   return HttpResponse(data, content_type="application/json")
 
 def get_user_by_id(request, id):

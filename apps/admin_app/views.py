@@ -4,7 +4,7 @@ from django.core import serializers
 from django.contrib import messages
 from .models import Admins
 import bcrypt, json
-from django.http import JsonResponse
+# from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
